@@ -5,12 +5,19 @@ import (
 	"blog/internal/handler"
 	"blog/internal/middleware"
 	"blog/internal/repository"
+	"blog/internal/service"
 	"log"
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
 func main() {
+	// 加载环境变量
+	if err := godotenv.Load(); err != nil {
+		log.Println("No .env file found")
+	}
+
 	// 加载配置
 	config.LoadConfig()
 
@@ -20,8 +27,10 @@ func main() {
 	// 创建 Gin 引擎
 	r := gin.Default()
 
+	r.Use(middleware.CORSMiddleware())
+
 	// 创建处理器
-	authHandler := handler.NewAuthHandler()
+	authHandler := handler.NewAuthHandler(service.NewAuthService())
 
 	// 注册路由
 	api := r.Group("/api/v1")

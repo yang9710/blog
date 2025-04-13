@@ -2,7 +2,6 @@ package handler
 
 import (
 	"blog/internal/model"
-	"blog/internal/service"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -17,9 +16,9 @@ type AuthHandler struct {
 	authService IAuthService
 }
 
-func NewAuthHandler() *AuthHandler {
+func NewAuthHandler(authService IAuthService) *AuthHandler {
 	return &AuthHandler{
-		authService: service.NewAuthService(),
+		authService: authService,
 	}
 }
 
