@@ -27,14 +27,20 @@ func main() {
 	// 创建 Gin 引擎
 	r := gin.Default()
 
+	// 添加全局中间件
 	r.Use(middleware.CORSMiddleware())
 
-	// 创建处理器
-	authHandler := handler.NewAuthHandler(service.NewAuthService())
+	// 初始化服务和处理器
+	authService := service.NewAuthService()
+	articleService := service.NewArticleService()
+
+	authHandler := handler.NewAuthHandler(authService)
+	articleHandler := handler.NewArticleHandler(articleService)
 
 	// 注册路由
 	api := r.Group("/api/v1")
 	{
+		// 认证相关路由（无需认证）
 		auth := api.Group("/auth")
 		{
 			auth.POST("/register", authHandler.Register)
@@ -45,7 +51,15 @@ func main() {
 		authenticated := api.Group("")
 		authenticated.Use(middleware.AuthMiddleware())
 		{
-			// 在这里添加需要认证的路由
+			// 文章相关路由
+			articles := authenticated.Group("/articles")
+			{
+				articles.POST("/create", articleHandler.CreateArticle)
+				articles.POST("/update", articleHandler.UpdateArticle)
+				articles.POST("/delete", articleHandler.DeleteArticle)
+				articles.POST("/detail", articleHandler.GetArticle)
+				articles.POST("/list", articleHandler.ListArticles)
+			}
 		}
 	}
 

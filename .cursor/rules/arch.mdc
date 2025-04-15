@@ -1,4 +1,9 @@
 ---
+description: 当我需要根据需求文档进行技术设计时
+globs: 
+alwaysApply: false
+---
+---
 description: 
 globs: 
 alwaysApply: false

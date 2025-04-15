@@ -53,3 +53,12 @@ func (h *AuthHandler) Login(c *gin.Context) {
 
 	c.JSON(http.StatusOK, response)
 }
+
+// RegisterRoutes 注册路由
+func (h *AuthHandler) RegisterRoutes(r *gin.Engine) {
+	api := r.Group("/api/v1/auth")
+	{
+		api.POST("/register", h.Register)
+		api.POST("/login", h.Login)
+	}
+}

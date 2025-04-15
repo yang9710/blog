@@ -1,4 +1,9 @@
 ---
+description: 当我提出一个新的需求，例如创建需求文档时
+globs: 
+alwaysApply: false
+---
+---
 description: 
 globs: 
 alwaysApply: false

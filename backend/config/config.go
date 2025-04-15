@@ -26,10 +26,7 @@ type Config struct {
 var AppConfig Config
 
 func LoadConfig() {
-	configFile := "config.yaml"
-	if os.Getenv("GO_ENV") == "test" {
-		configFile = "config/config_test.yaml"
-	}
+	configFile := "config/config.yaml"
 
 	data, err := os.ReadFile(configFile)
 	if err != nil {
