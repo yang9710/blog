@@ -162,9 +162,18 @@ func (r *ArticleRepository) List(page, pageSize int, status string, authorID uin
 	return articles, total, nil
 }
 
-// UpdateTags 更新文章标签
+// UpdateTags 更新文章和标签
 func (r *ArticleRepository) UpdateTags(article *model.Article, tags []string) error {
 	return r.db.Transaction(func(tx *gorm.DB) error {
+		// 更新文章基本信息
+		if err := tx.Model(article).Updates(map[string]interface{}{
+			"title":   article.Title,
+			"content": article.Content,
+			"status":  article.Status,
+		}).Error; err != nil {
+			return err
+		}
+
 		// 清除原有标签关联
 		if err := tx.Model(article).Association("Tags").Clear(); err != nil {
 			return err
@@ -173,12 +182,19 @@ func (r *ArticleRepository) UpdateTags(article *model.Article, tags []string) er
 		// 处理新标签
 		for _, tagName := range tags {
 			var tag model.Tag
+			// 先尝试查找标签，如果不存在则创建
 			if err := tx.Where("name = ?", tagName).FirstOrCreate(&tag, model.Tag{Name: tagName}).Error; err != nil {
 				return err
 			}
+			// 建立标签关联
 			if err := tx.Model(article).Association("Tags").Append(&tag); err != nil {
 				return err
 			}
+		}
+
+		// 重新加载文章信息（包括标签）
+		if err := tx.Preload("Tags").First(article, article.ID).Error; err != nil {
+			return err
 		}
 
 		return nil

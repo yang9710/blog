@@ -37,6 +37,24 @@ func (s *ArticleService) UpdateArticle(article *model.Article) error {
 	return s.articleRepo.Update(article)
 }
 
+// UpdateArticleWithTags 更新文章和标签
+func (s *ArticleService) UpdateArticleWithTags(article *model.Article, tagNames []string) error {
+	// 检查文章是否存在
+	existingArticle, err := s.articleRepo.FindByID(article.ID)
+	if err != nil {
+		return err
+	}
+	if existingArticle == nil {
+		return errors.New("文章不存在")
+	}
+
+	// 确保作者ID不变
+	article.AuthorID = existingArticle.AuthorID
+
+	// 更新文章和标签
+	return s.articleRepo.UpdateTags(article, tagNames)
+}
+
 // DeleteArticle 删除文章（软删除）
 func (s *ArticleService) DeleteArticle(id uint, authorID uint) error {
 	// 检查文章是否存在且属于该作者

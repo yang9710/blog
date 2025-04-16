@@ -30,7 +30,7 @@ export default function LoginPage() {
         </div>
       </motion.div>
       <div className="absolute bottom-4 right-4 text-white text-opacity-60 text-sm">
-        © 2024 博客系统
+        © {new Date().getFullYear()} 博客系统
       </div>
     </div>
   );

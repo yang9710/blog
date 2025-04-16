@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useRouter } from 'next/router';
-import { authService } from '../utils/auth';
+import { authService } from '../services';
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -15,25 +15,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
   const router = useRouter();
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      const token = localStorage.getItem('token');
-      if (token) {
-        try {
-          const user = await authService.getCurrentUser();
-          setUser(user);
-          setIsAuthenticated(true);
-        } catch (error) {
-          localStorage.removeItem('token');
-          setIsAuthenticated(false);
-          setUser(null);
-        }
-      }
-    };
-
-    checkAuth();
-  }, []);
 
   const login = async (email: string, password: string) => {
     try {

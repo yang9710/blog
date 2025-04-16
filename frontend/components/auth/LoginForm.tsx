@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { LoginRequest, ErrorResponse } from '../../types/auth';
-import { authService } from '../../utils/auth';
+import { authService } from '../../services';
 import CryptoJS from 'crypto-js';
 
 export default function LoginForm() {
@@ -35,10 +35,13 @@ export default function LoginForm() {
         ...formData,
         password: encryptPassword(formData.password),
       };
-      await authService.login(encryptedData);
+      const { token, user } = await authService.login(encryptedData);
       setSuccess('登录成功！正在跳转...');
+      // 存储用户信息和 token
+      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('token', token);
       setTimeout(() => {
-        router.push('/');
+        router.push('/articles');
       }, 1500);
     } catch (err: any) {
       setError(err.response?.data || {

@@ -117,13 +117,8 @@ func (h *ArticleHandler) UpdateArticle(c *gin.Context) {
 		Status:  req.Status,
 	}
 
-	// 处理标签
-	for _, tagName := range req.Tags {
-		article.Tags = append(article.Tags, model.Tag{Name: tagName})
-	}
-
-	// 更新文章
-	if err := h.articleService.UpdateArticle(article); err != nil {
+	// 更新文章和标签
+	if err := h.articleService.UpdateArticleWithTags(article, req.Tags); err != nil {
 		c.JSON(http.StatusInternalServerError, Response{
 			Code:    500,
 			Message: "更新文章失败: " + err.Error(),

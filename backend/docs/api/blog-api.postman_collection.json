@@ -60,7 +60,7 @@
 									"value": "application/json"
 								}
 							],
-							"body": "{\n    \"id\": 1,\n    \"username\": \"testuser\",\n    \"email\": \"test@example.com\",\n    \"created_at\": \"2024-04-13T12:00:00Z\",\n    \"updated_at\": \"2024-04-13T12:00:00Z\"\n}"
+							"body": "{\n    \"code\": 201,\n    \"message\": \"注册成功\",\n    \"data\": {\n        \"id\": 1,\n        \"username\": \"testuser\",\n        \"email\": \"test@example.com\",\n        \"created_at\": \"2024-04-13T12:00:00Z\",\n        \"updated_at\": \"2024-04-13T12:00:00Z\"\n    }\n}"
 						},
 						{
 							"name": "邮箱已存在",
@@ -91,7 +91,7 @@
 									"value": "application/json"
 								}
 							],
-							"body": "{\n    \"error\": \"email already exists\"\n}"
+							"body": "{\n    \"code\": 400,\n    \"message\": \"注册失败: email already exists\",\n    \"data\": null\n}"
 						}
 					]
 				},
@@ -146,7 +146,7 @@
 									"value": "application/json"
 								}
 							],
-							"body": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\",\n    \"user\": {\n        \"id\": 1,\n        \"username\": \"testuser\",\n        \"email\": \"test@example.com\"\n    }\n}"
+							"body": "{\n    \"code\": 200,\n    \"message\": \"登录成功\",\n    \"data\": {\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\",\n        \"user\": {\n            \"id\": 1,\n            \"username\": \"testuser\",\n            \"email\": \"test@example.com\"\n        }\n    }\n}"
 						},
 						{
 							"name": "认证失败",
@@ -177,7 +177,7 @@
 									"value": "application/json"
 								}
 							],
-							"body": "{\n    \"error\": \"invalid credentials\"\n}"
+							"body": "{\n    \"code\": 401,\n    \"message\": \"登录失败: invalid credentials\",\n    \"data\": null\n}"
 						}
 					]
 				}
@@ -245,7 +245,7 @@
 									"value": "application/json"
 								}
 							],
-							"body": "{\n    \"id\": 1,\n    \"title\": \"测试文章\",\n    \"content\": \"这是一篇测试文章的内容\",\n    \"status\": \"draft\",\n    \"author\": {\n        \"id\": 1,\n        \"username\": \"testuser\"\n    },\n    \"tags\": [\n        {\n            \"id\": 1,\n            \"name\": \"测试\"\n        },\n        {\n            \"id\": 2,\n            \"name\": \"示例\"\n        }\n    ],\n    \"created_at\": \"2024-04-13T12:00:00Z\",\n    \"updated_at\": \"2024-04-13T12:00:00Z\"\n}"
+							"body": "{\n    \"code\": 201,\n    \"message\": \"创建成功\",\n    \"data\": {\n        \"id\": 1,\n        \"title\": \"测试文章\",\n        \"content\": \"这是一篇测试文章的内容\",\n        \"status\": \"draft\",\n        \"author\": {\n            \"id\": 1,\n            \"username\": \"testuser\"\n        },\n        \"tags\": [\n            {\n                \"id\": 1,\n                \"name\": \"测试\"\n            },\n            {\n                \"id\": 2,\n                \"name\": \"示例\"\n            }\n        ],\n        \"created_at\": \"2024-04-13T12:00:00Z\",\n        \"updated_at\": \"2024-04-13T12:00:00Z\"\n    }\n}"
 						}
 					]
 				},
@@ -308,7 +308,7 @@
 									"value": "application/json"
 								}
 							],
-							"body": "{\n    \"id\": 1,\n    \"title\": \"更新后的文章标题\",\n    \"content\": \"更新后的文章内容\",\n    \"status\": \"published\",\n    \"author\": {\n        \"id\": 1,\n        \"username\": \"testuser\"\n    },\n    \"tags\": [\n        {\n            \"id\": 1,\n            \"name\": \"测试\"\n        },\n        {\n            \"id\": 3,\n            \"name\": \"更新\"\n        }\n    ],\n    \"updated_at\": \"2024-04-13T13:00:00Z\"\n}"
+							"body": "{\n    \"code\": 200,\n    \"message\": \"更新成功\",\n    \"data\": {\n        \"id\": 1,\n        \"title\": \"更新后的文章标题\",\n        \"content\": \"更新后的文章内容\",\n        \"status\": \"published\",\n        \"author\": {\n            \"id\": 1,\n            \"username\": \"testuser\"\n        },\n        \"tags\": [\n            {\n                \"id\": 1,\n                \"name\": \"测试\"\n            },\n            {\n                \"id\": 3,\n                \"name\": \"更新\"\n            }\n        ],\n        \"updated_at\": \"2024-04-13T13:00:00Z\"\n    }\n}"
 						}
 					]
 				},
@@ -362,8 +362,16 @@
 									"path": ["api", "v1", "articles", "delete"]
 								}
 							},
-							"status": "No Content",
-							"code": 204
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"删除成功\",\n    \"data\": null\n}"
 						}
 					]
 				},
@@ -426,7 +434,7 @@
 									"value": "application/json"
 								}
 							],
-							"body": "{\n    \"id\": 1,\n    \"title\": \"测试文章\",\n    \"content\": \"这是一篇测试文章的内容\",\n    \"status\": \"published\",\n    \"author\": {\n        \"id\": 1,\n        \"username\": \"testuser\"\n    },\n    \"tags\": [\n        {\n            \"id\": 1,\n            \"name\": \"测试\"\n        },\n        {\n            \"id\": 2,\n            \"name\": \"示例\"\n        }\n    ],\n    \"created_at\": \"2024-04-13T12:00:00Z\",\n    \"updated_at\": \"2024-04-13T12:00:00Z\"\n}"
+							"body": "{\n    \"code\": 200,\n    \"message\": \"获取成功\",\n    \"data\": {\n        \"id\": 1,\n        \"title\": \"测试文章\",\n        \"content\": \"这是一篇测试文章的内容\",\n        \"status\": \"published\",\n        \"author\": {\n            \"id\": 1,\n            \"username\": \"testuser\"\n        },\n        \"tags\": [\n            {\n                \"id\": 1,\n                \"name\": \"测试\"\n            },\n            {\n                \"id\": 2,\n                \"name\": \"示例\"\n            }\n        ],\n        \"created_at\": \"2024-04-13T12:00:00Z\",\n        \"updated_at\": \"2024-04-13T12:00:00Z\"\n    }\n}"
 						}
 					]
 				},
@@ -489,7 +497,7 @@
 									"value": "application/json"
 								}
 							],
-							"body": "{\n    \"total\": 2,\n    \"items\": [\n        {\n            \"id\": 1,\n            \"title\": \"测试文章1\",\n            \"content\": \"这是第一篇测试文章的内容\",\n            \"status\": \"published\",\n            \"author\": {\n                \"id\": 1,\n                \"username\": \"testuser\"\n            },\n            \"tags\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"测试\"\n                }\n            ],\n            \"created_at\": \"2024-04-13T12:00:00Z\",\n            \"updated_at\": \"2024-04-13T12:00:00Z\"\n        },\n        {\n            \"id\": 2,\n            \"title\": \"测试文章2\",\n            \"content\": \"这是第二篇测试文章的内容\",\n            \"status\": \"published\",\n            \"author\": {\n                \"id\": 1,\n                \"username\": \"testuser\"\n            },\n            \"tags\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"测试\"\n                }\n            ],\n            \"created_at\": \"2024-04-13T13:00:00Z\",\n            \"updated_at\": \"2024-04-13T13:00:00Z\"\n        }\n    ]\n}"
+							"body": "{\n    \"code\": 200,\n    \"message\": \"获取成功\",\n    \"data\": {\n        \"total\": 2,\n        \"items\": [\n            {\n                \"id\": 1,\n                \"title\": \"测试文章1\",\n                \"content\": \"这是第一篇测试文章的内容\",\n                \"status\": \"published\",\n                \"author\": {\n                    \"id\": 1,\n                    \"username\": \"testuser\"\n                },\n                \"tags\": [\n                    {\n                        \"id\": 1,\n                        \"name\": \"测试\"\n                    }\n                ],\n                \"created_at\": \"2024-04-13T12:00:00Z\",\n                \"updated_at\": \"2024-04-13T12:00:00Z\"\n            },\n            {\n                \"id\": 2,\n                \"title\": \"测试文章2\",\n                \"content\": \"这是第二篇测试文章的内容\",\n                \"status\": \"published\",\n                \"author\": {\n                    \"id\": 1,\n                    \"username\": \"testuser\"\n                },\n                \"tags\": [\n                    {\n                        \"id\": 1,\n                        \"name\": \"测试\"\n                    }\n                ],\n                \"created_at\": \"2024-04-13T13:00:00Z\",\n                \"updated_at\": \"2024-04-13T13:00:00Z\"\n            }\n        ]\n    }\n}"
 						}
 					]
 				}
