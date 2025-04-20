@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@ant-design/colors": "^8.0.0",
     "@types/crypto-js": "^4.2.2",
     "@uiw/react-md-editor": "^3.6.0",
     "antd": "^5.24.7",

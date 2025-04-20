@@ -1,4 +1,6 @@
-import LoginForm from '../../components/auth/LoginForm';
+'use client';
+
+import LoginForm from '@/components/auth/LoginForm';
 import { motion } from 'framer-motion';
 
 export default function LoginPage() {

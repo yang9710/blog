@@ -1,7 +1,9 @@
+'use client';
+
 import { useState } from 'react';
-import { useRouter } from 'next/router';
-import { RegisterRequest, ErrorResponse } from '../../types/auth';
-import { authService } from '../../utils/auth';
+import { useRouter } from 'next/navigation';
+import { RegisterRequest, ErrorResponse } from '@/types/auth';
+import { authService } from '@/services';
 import CryptoJS from 'crypto-js';
 
 export default function RegisterForm() {
