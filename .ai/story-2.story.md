@@ -80,78 +80,223 @@ Story Points: 5
 1. 创建文章
 ```
 POST /api/v1/articles/create
-Request Body:
+Headers:
 {
-  "title": "string",
-  "content": "string",
-  "status": "draft|published",
-  "tags": ["string"]
+    "Content-Type": "application/json",
+    "Authorization": "Bearer {token}"
+}
+
+Request:
+{
+    "title": "测试文章",
+    "content": "这是一篇测试文章的内容",
+    "status": "draft",
+    "tags": ["测试", "示例"]
+}
+
+Response (201 Created):
+{
+    "code": 201,
+    "message": "创建成功",
+    "data": {
+        "id": 1,
+        "title": "测试文章",
+        "content": "这是一篇测试文章的内容",
+        "status": "draft",
+        "author": {
+            "id": 1,
+            "username": "testuser"
+        },
+        "tags": [
+            {
+                "id": 1,
+                "name": "测试"
+            },
+            {
+                "id": 2,
+                "name": "示例"
+            }
+        ],
+        "created_at": "2024-04-13T12:00:00Z",
+        "updated_at": "2024-04-13T12:00:00Z"
+    }
 }
 ```
 
 2. 更新文章
 ```
 POST /api/v1/articles/update
-Request Body:
+Headers:
 {
-  "id": "number",
-  "title": "string",
-  "content": "string",
-  "status": "draft|published",
-  "tags": ["string"]
+    "Content-Type": "application/json",
+    "Authorization": "Bearer {token}"
+}
+
+Request:
+{
+    "id": 1,
+    "title": "更新后的文章标题",
+    "content": "更新后的文章内容",
+    "status": "published",
+    "tags": ["测试", "更新"]
+}
+
+Response (200 OK):
+{
+    "code": 200,
+    "message": "更新成功",
+    "data": {
+        "id": 1,
+        "title": "更新后的文章标题",
+        "content": "更新后的文章内容",
+        "status": "published",
+        "author": {
+            "id": 1,
+            "username": "testuser"
+        },
+        "tags": [
+            {
+                "id": 1,
+                "name": "测试"
+            },
+            {
+                "id": 3,
+                "name": "更新"
+            }
+        ],
+        "updated_at": "2024-04-13T13:00:00Z"
+    }
 }
 ```
 
 3. 删除文章
 ```
 POST /api/v1/articles/delete
-Request Body:
+Headers:
 {
-  "id": "number"
+    "Content-Type": "application/json",
+    "Authorization": "Bearer {token}"
+}
+
+Request:
+{
+    "id": 1
+}
+
+Response (200 OK):
+{
+    "code": 200,
+    "message": "删除成功",
+    "data": null
 }
 ```
 
 4. 获取文章详情
 ```
 POST /api/v1/articles/detail
-Request Body:
+Headers:
 {
-  "id": "number"
+    "Content-Type": "application/json",
+    "Authorization": "Bearer {token}"
+}
+
+Request:
+{
+    "id": 1
+}
+
+Response (200 OK):
+{
+    "code": 200,
+    "message": "获取成功",
+    "data": {
+        "id": 1,
+        "title": "测试文章",
+        "content": "这是一篇测试文章的内容",
+        "status": "published",
+        "author": {
+            "id": 1,
+            "username": "testuser"
+        },
+        "tags": [
+            {
+                "id": 1,
+                "name": "测试"
+            },
+            {
+                "id": 2,
+                "name": "示例"
+            }
+        ],
+        "created_at": "2024-04-13T12:00:00Z",
+        "updated_at": "2024-04-13T12:00:00Z"
+    }
 }
 ```
 
 5. 获取文章列表
 ```
 POST /api/v1/articles/list
-Request Body:
+Headers:
 {
-  "page": "number",
-  "page_size": "number",
-  "status": "string",
-  "author_id": "number",
-  "tag": "string"
+    "Content-Type": "application/json",
+    "Authorization": "Bearer {token}"
 }
-```
 
-### 响应格式
-```json
+Request:
 {
-  "code": "number",
-  "message": "string",
-  "data": {
-    // 文章详情
-    "id": "number",
-    "title": "string",
-    "content": "string",
-    "status": "string",
-    "author": {
-      "id": "number",
-      "username": "string"
-    },
-    "tags": ["string"],
-    "created_at": "datetime",
-    "updated_at": "datetime"
-  }
+    "page": 1,
+    "page_size": 10,
+    "status": "published",
+    "author_id": 1,
+    "tag": "测试"
+}
+
+Response (200 OK):
+{
+    "code": 200,
+    "message": "获取成功",
+    "data": {
+        "total": 2,
+        "items": [
+            {
+                "id": 1,
+                "title": "测试文章1",
+                "content": "这是第一篇测试文章的内容",
+                "status": "published",
+                "author": {
+                    "id": 1,
+                    "username": "testuser"
+                },
+                "tags": [
+                    {
+                        "id": 1,
+                        "name": "测试"
+                    }
+                ],
+                "created_at": "2024-04-13T12:00:00Z",
+                "updated_at": "2024-04-13T12:00:00Z"
+            },
+            {
+                "id": 2,
+                "title": "测试文章2",
+                "content": "这是第二篇测试文章的内容",
+                "status": "published",
+                "author": {
+                    "id": 1,
+                    "username": "testuser"
+                },
+                "tags": [
+                    {
+                        "id": 1,
+                        "name": "测试"
+                    }
+                ],
+                "created_at": "2024-04-13T13:00:00Z",
+                "updated_at": "2024-04-13T13:00:00Z"
+            }
+        ]
+    }
 }
 ```
 
@@ -205,7 +350,7 @@ CREATE TABLE article_tags (
 │   │   └── /middleware
 │   │       └── auth.go
 ├── /frontend
-│   ├── /pages
+│   ├── /app
 │   │   ├── /articles
 │   │   │   ├── index.tsx
 │   │   │   ├── [id].tsx

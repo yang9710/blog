@@ -68,32 +68,67 @@ Story Points: 3
 
 ## Data Models / Schema
 
-### 用户注册请求
-```json
+### API 接口设计
+
+1. 用户注册
+```
+POST /api/v1/auth/register
+Request:
 {
-  "username": "string",
-  "email": "string",
-  "password": "string"
+    "username": "testuser",
+    "email": "test@example.com",
+    "password": "password123"
+}
+
+Response (201 Created):
+{
+    "code": 201,
+    "message": "注册成功",
+    "data": {
+        "id": 1,
+        "username": "testuser",
+        "email": "test@example.com",
+        "created_at": "2024-04-13T12:00:00Z",
+        "updated_at": "2024-04-13T12:00:00Z"
+    }
+}
+
+Response (400 Bad Request):
+{
+    "code": 400,
+    "message": "注册失败: email already exists",
+    "data": null
 }
 ```
 
-### 用户登录请求
-```json
-{
-  "email": "string",
-  "password": "string"
-}
+2. 用户登录
 ```
-
-### 登录响应
-```json
+POST /api/v1/auth/login
+Request:
 {
-  "token": "string",
-  "user": {
-    "id": "number",
-    "username": "string",
-    "email": "string"
-  }
+    "email": "test@example.com",
+    "password": "password123"
+}
+
+Response (200 OK):
+{
+    "code": 200,
+    "message": "登录成功",
+    "data": {
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+        "user": {
+            "id": 1,
+            "username": "testuser",
+            "email": "test@example.com"
+        }
+    }
+}
+
+Response (401 Unauthorized):
+{
+    "code": 401,
+    "message": "登录失败: invalid credentials",
+    "data": null
 }
 ```
 
@@ -128,14 +163,25 @@ CREATE TABLE users (
 │   ├── /config
 │   │   └── database.go
 ├── /frontend
-│   ├── /pages
-│   │   ├── /auth
-│   │   │   ├── register.tsx
-│   │   │   └── login.tsx
+│   ├── /app
+│   │   └── /auth
+│   │       ├── /login
+│   │       │   └── page.tsx
+│   │       └── /register
+│   │           └── page.tsx
 │   ├── /components
 │   │   └── /auth
 │   │       ├── RegisterForm.tsx
 │   │       └── LoginForm.tsx
+│   ├── /contexts
+│   │   ├── AuthContext.tsx
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   ├── /services
+│   │   ├── index.ts
+│   │   ├── request.ts
+│   │   └── url.ts
+
 ```
 
 ## Diagrams

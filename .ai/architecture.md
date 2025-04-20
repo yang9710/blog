@@ -105,8 +105,8 @@ type Comment struct {
 
 ```
 ├── /frontend
-│   ├── /components     # React 组件
-│   ├── /pages         # Next.js 页面
+│   ├── /components    # React 组件
+│   ├── /app           # Next.js 页面
 │   ├── /styles        # 样式文件
 │   ├── /utils         # 工具函数
 │   └── /types         # TypeScript 类型定义
