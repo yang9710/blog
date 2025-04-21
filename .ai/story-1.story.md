@@ -173,10 +173,6 @@ CREATE TABLE users (
 │   │   └── /auth
 │   │       ├── RegisterForm.tsx
 │   │       └── LoginForm.tsx
-│   ├── /contexts
-│   │   ├── AuthContext.tsx
-│   │   ├── layout.tsx
-│   │   └── page.tsx
 │   ├── /services
 │   │   ├── index.ts
 │   │   ├── request.ts

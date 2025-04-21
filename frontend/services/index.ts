@@ -4,7 +4,7 @@ import {
   Article,
   CreateArticleRequest,
   UpdateArticleRequest,
-  ListArticleRequest,
+  ArticleListRequest,
   ApiResponse,
   ListResponse
 } from '../types/article';
@@ -45,7 +45,7 @@ export const articleService = {
   },
 
   // 获取文章列表
-  async list(params: ListArticleRequest): Promise<ListResponse<Article>> {
+  async list(params: ArticleListRequest): Promise<ListResponse<Article>> {
     const response = await request.post<ApiResponse<ListResponse<Article>>>(
       API_URLS.article.list,
       params

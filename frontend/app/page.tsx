@@ -1,15 +1,18 @@
 'use client';
 
 import '@/styles/globals.css';
-import type AppProps from 'next/app';
-import { AuthProvider } from '@/contexts/AuthContext';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuthStore } from '@/stores/auth';
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return (
-    <AuthProvider>
-      <Component {...pageProps} />
-    </AuthProvider>
-  );
+export default function HomePage() {
+  const router = useRouter();
+  const { initialize } = useAuthStore();
+
+  useEffect(() => {
+    initialize();
+    router.push('/articles');
+  }, [initialize, router]);
+
+  return null;
 }
-
-export default MyApp;

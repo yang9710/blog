@@ -1,3 +1,5 @@
+import { User } from './auth';
+
 export interface Tag {
   id: number;
   name: string;
@@ -13,7 +15,10 @@ export interface Article {
   title: string;
   content: string;
   status: 'draft' | 'published';
-  author: Author;
+  author: {
+    id: number;
+    username: string;
+  };
   tags: Tag[];
   created_at: string;
   updated_at: string;
@@ -26,16 +31,25 @@ export interface CreateArticleRequest {
   tags: string[];
 }
 
-export interface UpdateArticleRequest extends CreateArticleRequest {
+export interface UpdateArticleRequest {
   id: number;
+  title: string;
+  content: string;
+  status: 'draft' | 'published';
+  tags: string[];
 }
 
-export interface ListArticleRequest {
+export interface ArticleListRequest {
   page: number;
   page_size: number;
   status?: string;
   author_id?: number;
   tag?: string;
+}
+
+export interface ArticleListResponse {
+  total: number;
+  articles: Article[];
 }
 
 export interface ApiResponse<T> {
